@@ -18,14 +18,24 @@ public class InputView {
         // 배열로 변환
         List<String> carNameList = Arrays.asList(carNameArray);
 
+        if(carNameList.stream().mapToInt(String::length).max().orElse(0) > 5) {
+            throw new IllegalArgumentException("5글자 이상 입력함");
+        }
+
         return carNameList;
     }
 
     public int getTryCount() {
 
-        System.out.println("시도할 횟수는 몇회인가요?");
-        int tryCount = Integer.parseInt(Console.readLine());
+        try {
+            System.out.println("시도할 횟수는 몇회인가요?");
+            int tryCount = Integer.parseInt(Console.readLine());
 
-        return tryCount;
+            return tryCount;
+        }
+        catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 형식을 입력하였습니다", e);
+        }
+
     }
 }

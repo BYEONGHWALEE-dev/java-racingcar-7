@@ -12,13 +12,12 @@ public class RaceController {
 
     private  InputView inputView;
     private OutputView outputView;
+    private ArrayList<Car> checkList = new ArrayList<>();
 
     public RaceController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-
-    private ArrayList<Car> checkList = new ArrayList<>();
 
     // getter/setter method
 
@@ -36,10 +35,11 @@ public class RaceController {
     }
 
     // 시뮬레이션 함수
-    void run(){
+    public void run(){
 
         List<String> carNameList = inputView.getCarNames();
         int roundCount = inputView.getTryCount();
+        String winner;
 
         // 출발선 지정
         for (String s : carNameList) {
@@ -58,5 +58,26 @@ public class RaceController {
 
             outputView.showTheResult(checkList);
         }
+
+        // 우승자
+        winner = getWinner(checkList);
+        outputView.showTheWinenr(winner);
+    }
+
+    // 우승자 발표
+   String getWinner(ArrayList<Car> checkList) {
+
+        int maxDistance = checkList.stream().mapToInt(Car::getPosition).max().orElse(0);
+        ArrayList<String> winnerCar = new ArrayList<>();
+
+        for(Car car : checkList) {
+            if(car.getPosition()==maxDistance) {
+                winnerCar.add(car.getName());
+            }
+        }
+
+        String winner = String.join(", ", winnerCar);
+
+        return winner;
     }
 }

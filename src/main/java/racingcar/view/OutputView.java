@@ -15,8 +15,12 @@ public class OutputView {
 
             System.out.println(tempCar.getName() + " : " + distance);
         }
-
         //한줄의 공백을 위해
         System.out.println();
+    }
+
+    // 우승자 발표
+    public void showTheWinenr(String winner) {
+        System.out.println("최종 우승자 : " + winner);
     }
 }
